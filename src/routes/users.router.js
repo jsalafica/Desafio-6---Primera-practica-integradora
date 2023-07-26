@@ -7,8 +7,10 @@ router
   .route("/")
   .get(async (req, res) => {
     try {
-      let users = await userModel.find();
-      res.send({ result: "success", payload: users });
+      let users = await userModel.find().lean(); // Ojo con .lean() !!!
+      // res.send({ result: "success", payload: users });
+      // console.log(users);
+      res.render("chat", { users });
     } catch (error) {
       console.log(error);
     }

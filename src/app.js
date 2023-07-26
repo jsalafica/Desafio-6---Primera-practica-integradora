@@ -1,6 +1,8 @@
 import express, { json, urlencoded } from "express";
+import { engine } from "express-handlebars";
 import mongoose from "mongoose";
 import router from "./routes/router.js";
+import { __dirname } from "./utils.js";
 
 const app = express();
 const PORT = 8080;
@@ -29,4 +31,8 @@ db.once("open", () => {
   console.log("DB connected successfully");
 });
 
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", __dirname + "/views");
+app.use(express.static(__dirname + "/public"));
 app.use("/", router);
